@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Account doc</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Account-сервис-менеджмента-счетов-пользователя"></a>
+<h1 >Account: сервис менеджмента счетов пользователя<a href="#Account-сервис-менеджмента-счетов-пользователя" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="1-Открытие-нового-счета"></a>
+<h2 >1. Открытие нового счета<a href="#1-Открытие-нового-счета" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/account/open</code><br />Тело: <pre>
+{
+    auth_token: &lt;auth_token&gt;,
+    name: &lt;name&gt;,
+    type: &lt;type_of_account&gt;,
+    currency: &lt;ISO_4217&gt;    
+}
+</pre></p>
+
+
+	<ul>
+	<li><code>currency</code> - это идентификатор валюты, состоящий из 3 цифр в сооветствии со стандартом <a href="https://en.wikipedia.org/wiki/ISO_4217" class="external">ISO 4217</a></li>
+	</ul>
+
+
+	<ul>
+	<li>Например: <code>currency</code>: "EUR" значит, что счёт будет в евро.</li>
+	</ul>
+
+
+	<ul>
+	<li><code>type</code> - это тип счета. <em>(см. таблицу)</em>
+
+	<table>
+		<tr>
+			<td>тип счета</td>
+			<td>значение</td>
+		</tr>
+		<tr>
+			<td>0</td>
+			<td>наличные</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>карта</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>счет в банке</td>
+		</tr>
+	</table></li>
+	</ul>
+
+
+	<p>Ответ: <pre>
+{
+    error_code: 0,
+    account_id: &lt;account_id&gt;
+}
+</pre><br />или<br /><pre>
+{
+    error_code: 1
+}
+</pre></p>
+
+
+	<p>Коды результата (<code>error_code</code>):</p>
+
+
+	<ul>
+	<li>0 — успешное открытие счета</li>
+		<li>1 — счет открыт не был</li>
+	</ul>
+
+
+	<a name="2-Закрытие-счета"></a>
+<h2 >2. Закрытие счета<a href="#2-Закрытие-счета" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/account/close</code><br />Тело:<br /><pre>
+{
+    auth_token: &lt;auth_token&gt;,
+    account_id: &lt;account_id&gt;
+}
+</pre><br />Ответ:<br /><pre>
+{
+    error_code: &lt;error_code&gt; 
+}
+</pre></p>
+
+
+	<a name="3-Получение-списка-всех-счетов-пользователя"></a>
+<h2 >3. Получение списка всех счетов пользователя<a href="#3-Получение-списка-всех-счетов-пользователя" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/account/list</code><br />Тело:<br /><pre>
+{
+    auth_token: &lt;auth_token&gt;
+}
+</pre></p>
+
+
+	<p>Ответ:<br /><pre>
+{
+    error_code: 1 
+}
+</pre></p>
+
+
+	<p>или</p>
+
+
+<pre>
+{
+    error_code: 0
+    accounts: [
+        {
+            name: &lt;name&gt;,
+            type: &lt;type_of_account&gt;,
+            account_id: &lt;account_id&gt;,
+            currency: &lt;ISO_4217&gt;,
+            balance: &lt;balance&gt;,
+            opendate: &lt;opendate_timestamp&gt;,
+            closedate: &lt;closedate_timestamp&gt;    
+        },
+        ..... ]
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Auth doc</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Auth-сервис-аутентификации"></a>
+<h1 >Auth: сервис аутентификации<a href="#Auth-сервис-аутентификации" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="1-Создание-нового-пользователя"></a>
+<h2 >1. Создание нового пользователя<a href="#1-Создание-нового-пользователя" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос:  <code>/auth/new</code><br />Тело: <pre>
+{
+    login:"drankov",
+    password:"12345678" 
+}
+</pre><br />Ответ: <pre>
+{
+    error_code: &lt;error_code&gt; 
+}
+</pre></p>
+
+
+	<p>Коды результата (<code>error_code</code>):</p>
+
+
+	<ul>
+	<li>0 — успешное создание</li>
+		<li>1 — пользователь создан небыл</li>
+	</ul>
+
+
+	<a name="2-Получение-токена"></a>
+<h2 >2. Получение токена<a href="#2-Получение-токена" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/auth/auth</code><br />Тело: <pre>
+{
+    login:"drankov",
+    password:"12345678" 
+}
+</pre><br />Ответ: <pre>
+{
+    error_code: 0,
+    token:"12312312j3jijri1ojrIJIO+124+-7JROIRJ" 
+}
+</pre><br />или<br /><pre>
+{
+     error_code: 1,
+     error_msg: &lt;error_msg&gt;
+}
+</pre></p>
+
+
+	<a name="3-Проверка-токена-на-валидность"></a>
+<h2 >3. Проверка токена на валидность<a href="#3-Проверка-токена-на-валидность" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос :  <code>/auth/check</code><br />Тело запроса: <pre>
+{
+    token:"12312312j3jijri1ojrIJIO+124+-7JROIRJ" 
+}
+</pre><br />Ответ :<br /> <pre>
+{
+    error_code: &lt;error_code&gt; 
+}
+</pre></p>
+</body>
+</html>

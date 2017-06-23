@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Cat doc</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Category-сервис-управления-категориями"></a>
+<h1 >Category: сервис управления категориями<a href="#Category-сервис-управления-категориями" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="1-Cоздать-новую-родительскую-категорию"></a>
+<h2 >1. Cоздать новую родительскую категорию<a href="#1-Cоздать-новую-родительскую-категорию" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/category/new_parent</code><br />Тело: <pre>
+{
+    auth_token: &lt;auth_token&gt;,
+    name: &lt;name_of_category&gt;,
+    description: &lt;description&gt;,
+    type: &lt;type&gt;
+}
+
+</pre></p>
+
+
+	<table>
+		<tr>
+			<td>тип категории</td>
+			<td>значение</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>категоря приходная</td>
+		</tr>
+		<tr>
+			<td>-1</td>
+			<td>категория затратная</td>
+		</tr>
+	</table>
+
+
+
+
+	<p>Ответ:<pre>
+{
+    error_code: 0,
+    category_id: &lt;category_id&gt; 
+}
+</pre><br />или<br /><pre>
+{
+     error_code: 1
+}
+</pre></p>
+
+
+	<a name="2-Cоздать-новую-дочернюю-категорию"></a>
+<h2 >2. Cоздать новую дочернюю категорию<a href="#2-Cоздать-новую-дочернюю-категорию" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/category/new_child</code><br />Тело: <pre>
+{
+    auth_token: &lt;auth_token&gt;,
+    name: &lt;name_of_category&gt;,
+    description: &lt;description&gt;,
+    parent_id: &lt;id_of_parent_category&gt;
+}
+</pre></p>
+
+
+	<p>Ответ:<br /><pre>
+{
+    error_code: 0,
+    category_id: &lt;category_id&gt; 
+}
+</pre><br />или<br /><pre>
+{
+     error_code: 1
+}
+</pre></p>
+
+
+	<a name="3-Удалить-категорию-со-всеми-подкатегорями"></a>
+<h2 >3. Удалить категорию со всеми подкатегорями<a href="#3-Удалить-категорию-со-всеми-подкатегорями" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/category/delete</code><br />Тело: <pre>
+{
+    auth_token: &lt;auth_token&gt;,
+    category_id: &lt;category_id&gt;
+}
+</pre></p>
+
+
+	<p>Ответ:<br /><pre>
+{
+    error_code: &lt;error_code&gt;
+}
+</pre></p>
+
+
+	<a name="4-Получить-все-категории"></a>
+<h2 >4. Получить все категории<a href="#4-Получить-все-категории" class="wiki-anchor">&para;</a></h2>
+
+
+	<p>Запрос: <code>/category/list</code><br />Тело: <pre>
+{
+    auth_token: &lt;auth_token&gt;
+}
+</pre></p>
+
+
+	<p>Ответ:<br /><pre>
+{
+    error_code: 0,
+    cat_list: [
+        {
+         category_id: &lt;category_id&gt;,
+         name: &lt;name_of_category&gt;,
+         description: &lt;description&gt;,
+         sum: &lt;sum&gt;,
+         type: &lt;type&gt;,
+         child_list:[&lt;category_id&gt;, ....]
+        },
+        ......]
+}
+</pre><br />или<br /><pre>
+{
+     error_code: 1
+}
+</pre></p>
+</body>
+</html>
